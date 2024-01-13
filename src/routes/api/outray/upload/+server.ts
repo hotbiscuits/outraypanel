@@ -51,7 +51,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		console.log('Making API call to Flask with path:', normalizedFullPath);
 		console.log(`${FLASK_URL}/flaskin/`);
-		const response = await fetch(`${FLASK_URL}flaskin/`, {
+		const response = await fetch(`${FLASK_URL}/flaskin/`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ filePath: normalizedFullPath })

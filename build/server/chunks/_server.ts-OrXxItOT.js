@@ -32,7 +32,7 @@ const POST = async ({ request }) => {
     const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, "$1");
     console.log("Making API call to Flask with path:", normalizedFullPath);
     console.log(`${FLASK_URL}/flaskin/`);
-    const response = await fetch(`${FLASK_URL}flaskin/`, {
+    const response = await fetch(`${FLASK_URL}/flaskin/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ filePath: normalizedFullPath })
@@ -55,4 +55,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-es9o1Jz8.js.map
+//# sourceMappingURL=_server.ts-OrXxItOT.js.map
