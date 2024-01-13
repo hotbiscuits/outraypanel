@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const BASE_URL = "http://localhost:5173/";
-const FLASK_URL = "https://pdfparser-production.up.railway.app/";
+const BASE_URL = "https://outraypanel-production.up.railway.app/";
+const FLASK_URL = "https://pdfparser-production.up.railway.app";
 async function saveFile(file, uploadDir) {
   const fileName = Math.floor(1e3 + Math.random() * 9e3) + ".pdf";
   const filePath = path.join(uploadDir, fileName);
@@ -55,4 +55,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-WrcEbzWF.js.map
+//# sourceMappingURL=_server.ts-es9o1Jz8.js.map
