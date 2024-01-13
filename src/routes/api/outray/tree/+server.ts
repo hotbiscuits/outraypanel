@@ -16,13 +16,21 @@ async function getDirectoryTree(dirPath) {
 	return result;
 }
 
-export async function GET(req, res) {
+export async function GET() {
 	try {
-		// Get the file tree starting from the current working directory (project root)
 		const tree = await getDirectoryTree(process.cwd());
-		res.end(JSON.stringify(tree));
+		return new Response(JSON.stringify(tree), {
+			status: 200,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 	} catch (error) {
-		res.statusCode = 500;
-		res.end(JSON.stringify({ error: 'Failed to read directory' }));
+		return new Response(JSON.stringify({ error: 'Failed to read directory' }), {
+			status: 500,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 }
