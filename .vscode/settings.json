@@ -1,0 +1,14 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "192.168.1.124",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"database": "exemdb",
+			"username": "postgres",
+			"password": "Access1.",
+			"name": "Mini1"
+		}
+	]
+}
