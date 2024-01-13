@@ -46,7 +46,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		console.log('File saved:', savedFileName);
 
 		const publicPath = `uploads/${savedFileName}`;
-		const fullPath = `${BASE_URL}/${publicPath}`;
+		const fullPath = `${BASE_URL}${publicPath}`;
 		const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, '$1');
 
 		console.log('Making API call to Flask with path:', normalizedFullPath);
