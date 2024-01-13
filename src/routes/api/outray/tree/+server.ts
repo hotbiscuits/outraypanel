@@ -6,10 +6,22 @@ async function getDirectoryTree(dirPath) {
 	const result = await Promise.all(
 		entries.map(async (entry) => {
 			const fullPath = path.join(dirPath, entry.name);
+			const stats = await fs.stat(fullPath);
+			const permissions = `0${(stats.mode & 0o777).toString(8)}`; // Convert to octal string
+
 			if (entry.isDirectory()) {
-				return { name: entry.name, type: 'directory', children: await getDirectoryTree(fullPath) };
+				return {
+					name: entry.name,
+					type: 'directory',
+					permissions: permissions,
+					children: await getDirectoryTree(fullPath)
+				};
 			} else {
-				return { name: entry.name, type: 'file' };
+				return {
+					name: entry.name,
+					type: 'file',
+					permissions: permissions
+				};
 			}
 		})
 	);
