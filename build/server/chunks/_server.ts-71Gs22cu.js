@@ -43,10 +43,10 @@ const POST = async ({ request }) => {
       console.error("File type is not PDF");
       return new Response(JSON.stringify({ error: "Only PDF files are allowed" }), { status: 400 });
     }
-    const uploadDir = "static/uploads";
+    const uploadDir = "/static/";
     const savedFileName = await saveFile(file, uploadDir);
     console.log("File saved:", savedFileName);
-    const publicPath = `uploads/${savedFileName}`;
+    const publicPath = `/${savedFileName}`;
     const fullPath = `${BASE_URL}/${publicPath}`;
     const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, "$1");
     console.log("Making API call to Flask with path:", normalizedFullPath);
@@ -61,7 +61,6 @@ const POST = async ({ request }) => {
       throw new Error("Error processing file");
     }
     console.log("File processing by Flask API successful");
-    fs.unlinkSync(path.join(uploadDir, savedFileName));
     console.log("File deleted from SvelteKit server:", savedFileName);
     return new Response(JSON.stringify({ fullPath }), { status: 200 });
   } catch (error) {
@@ -74,4 +73,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-dq5QpUu-.js.map
+//# sourceMappingURL=_server.ts-71Gs22cu.js.map
