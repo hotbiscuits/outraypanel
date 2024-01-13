@@ -16,7 +16,7 @@ async function getDirectoryTree(dirPath) {
 	return result;
 }
 
-export async function get(req, res) {
+export async function GET(req, res) {
 	try {
 		const tree = await getDirectoryTree('path/to/your/directory');
 		res.end(JSON.stringify(tree));
