@@ -9,14 +9,37 @@ async function saveFile(file: File, uploadDir: string): Promise<string> {
 
 	const filePath = path.join(uploadDir, fileName);
 
+	console.log('Preparing to save file at:', filePath);
+
 	// Ensure the upload directory exists
-	fs.mkdirSync(uploadDir, { recursive: true });
+	if (!fs.existsSync(uploadDir)) {
+		console.log('Creating upload directory:', uploadDir);
+		fs.mkdirSync(uploadDir, { recursive: true });
+	}
 
 	// Convert ArrayBuffer to Buffer
 	const buffer = Buffer.from(await file.arrayBuffer());
 
 	// Save the file
 	await fs.promises.writeFile(filePath, buffer);
+
+	try {
+		const buffer = Buffer.from(await file.arrayBuffer());
+		await fs.promises.writeFile(filePath, buffer);
+		console.log('File saved:', filePath);
+
+		// Verify file existence and size
+		if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
+			console.log('File verification successful:', filePath);
+			return fileName;
+		} else {
+			console.error('File verification failed:', filePath);
+			return 'null';
+		}
+	} catch (error) {
+		console.error('Error saving file:', error);
+		return 'null';
+	}
 
 	return fileName;
 }
@@ -56,7 +79,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ filePath: normalizedFullPath })
 		});
-
+		// https://pdfparser-production.up.railway.app
 		if (!response.ok) {
 			console.error('Flask API call failed');
 			throw new Error('Error processing file');

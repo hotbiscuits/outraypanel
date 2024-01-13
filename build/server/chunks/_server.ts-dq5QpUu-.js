@@ -6,9 +6,28 @@ const FLASK_URL = "https://pdfparser-production.up.railway.app";
 async function saveFile(file, uploadDir) {
   const fileName = Math.floor(1e3 + Math.random() * 9e3) + ".pdf";
   const filePath = path.join(uploadDir, fileName);
-  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log("Preparing to save file at:", filePath);
+  if (!fs.existsSync(uploadDir)) {
+    console.log("Creating upload directory:", uploadDir);
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
   const buffer = Buffer.from(await file.arrayBuffer());
   await fs.promises.writeFile(filePath, buffer);
+  try {
+    const buffer2 = Buffer.from(await file.arrayBuffer());
+    await fs.promises.writeFile(filePath, buffer2);
+    console.log("File saved:", filePath);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
+      console.log("File verification successful:", filePath);
+      return fileName;
+    } else {
+      console.error("File verification failed:", filePath);
+      return "null";
+    }
+  } catch (error) {
+    console.error("Error saving file:", error);
+    return "null";
+  }
   return fileName;
 }
 const POST = async ({ request }) => {
@@ -55,4 +74,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-OrXxItOT.js.map
+//# sourceMappingURL=_server.ts-dq5QpUu-.js.map
