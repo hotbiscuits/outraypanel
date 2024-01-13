@@ -4,7 +4,7 @@
     let directoryTree = [];
 
     onMount(async () => {
-        const response = await fetch('/api/filesystem');
+        const response = await fetch('/api/outray/tree/');
         if (response.ok) {
             directoryTree = await response.json();
         } else {

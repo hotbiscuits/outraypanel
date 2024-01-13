@@ -18,7 +18,8 @@ async function getDirectoryTree(dirPath) {
 
 export async function GET(req, res) {
 	try {
-		const tree = await getDirectoryTree('path/to/your/directory');
+		// Get the file tree starting from the current working directory (project root)
+		const tree = await getDirectoryTree(process.cwd());
 		res.end(JSON.stringify(tree));
 	} catch (error) {
 		res.statusCode = 500;
