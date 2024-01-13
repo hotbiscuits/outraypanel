@@ -64,11 +64,11 @@ export const POST: RequestHandler = async ({ request }) => {
 			return new Response(JSON.stringify({ error: 'Only PDF files are allowed' }), { status: 400 });
 		}
 
-		const uploadDir = 'static/';
+		const uploadDir = 'static/uploads';
 		const savedFileName = await saveFile(file, uploadDir);
 		console.log('File saved:', savedFileName);
 
-		const publicPath = `/${savedFileName}`;
+		const publicPath = `uploads/${savedFileName}`;
 		const fullPath = `${BASE_URL}/${publicPath}`;
 		const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, '$1');
 
