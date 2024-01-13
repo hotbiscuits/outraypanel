@@ -17,6 +17,8 @@ async function saveFile(file, uploadDir) {
     const buffer2 = Buffer.from(await file.arrayBuffer());
     await fs.promises.writeFile(filePath, buffer2);
     console.log("File saved:", filePath);
+    await fs.promises.chmod(filePath, 511);
+    console.log("File permissions changed to 777:", filePath);
     if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
       console.log("File verification successful:", filePath);
       return fileName;
@@ -43,7 +45,7 @@ const POST = async ({ request }) => {
       console.error("File type is not PDF");
       return new Response(JSON.stringify({ error: "Only PDF files are allowed" }), { status: 400 });
     }
-    const uploadDir = "/static/";
+    const uploadDir = "./static/";
     const savedFileName = await saveFile(file, uploadDir);
     console.log("File saved:", savedFileName);
     const publicPath = `/${savedFileName}`;
@@ -73,4 +75,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-71Gs22cu.js.map
+//# sourceMappingURL=_server.ts-JtoV6Gj-.js.map
