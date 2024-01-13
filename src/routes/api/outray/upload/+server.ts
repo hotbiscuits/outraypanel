@@ -27,7 +27,8 @@ async function saveFile(file: File, uploadDir: string): Promise<string> {
 		const buffer = Buffer.from(await file.arrayBuffer());
 		await fs.promises.writeFile(filePath, buffer);
 		console.log('File saved:', filePath);
-
+		await fs.promises.chmod(filePath, 0o777);
+		console.log('File permissions changed to 777:', filePath);
 		// Verify file existence and size
 		if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
 			console.log('File verification successful:', filePath);
