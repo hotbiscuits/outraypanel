@@ -13,7 +13,8 @@ export async function GET({ params, request }) {
 	const file_path = path.normalize(path.join(uploadsDir, params.name));
 
 	if (!fs.existsSync(file_path)) {
-		return new Response('not found', { status: 404 });
+		// Custom error response
+		return new Response(`File not found not a teapot: ${params.name}`, { status: 418 });
 	}
 
 	const stats = fs.statSync(file_path);
