@@ -12,7 +12,7 @@ import { breadcrumbs } from '$lib/stores/breadcrumbStore';
 $: activeUrl = $page.url.pathname;
 let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 let activeClass = 'flex items-center py-3 px-2 text-primary-200 bg-primary-200 dark:bg-[#0c4a6e] rounded-lg border border-sky-800 dark:text-grey-200 dark:hover:border-gray-500 dark:hover:border';
-let nonActiveClass = 'flex w-full items-center py-3 px-2 border border-gray-700 rounded-md dark:text-white dark:bg-[#383838]/50 dark:hover:bg-gray-700/75 dark:hover:border-gray-700 dark:hover:border';
+let nonActiveClass = 'flex w-full items-center py-3 px-2 border border-gray-700 rounded-md dark:text-white dark:bg-[#383838]/50 dark:hover:bg-gray-700/75 dark:hover:border-gray-700 dark:hover:border transition duration-200';
 let dropactiveClass = 'flex ml-5 items-center py-3 px-2 border border-gray-700 rounded-md dark:text-white dark:bg-[#383838]/50 dark:hover:bg-gray-700/75 dark:hover:border-gray-500 dark:hover:border';
 
 
