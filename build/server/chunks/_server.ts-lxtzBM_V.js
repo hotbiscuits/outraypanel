@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const FLASK_URL = "http://192.168.1.108:5000/flaskin/";
+const FLASK_URL = "https://pdfparser-production.up.railway.app/flaskin/";
 const POST = async ({ request }) => {
   try {
     console.log("Received file upload request");
@@ -31,4 +31,4 @@ const POST = async ({ request }) => {
 };
 
 export { POST };
-//# sourceMappingURL=_server.ts-XMhs7JkL.js.map
+//# sourceMappingURL=_server.ts-lxtzBM_V.js.map
