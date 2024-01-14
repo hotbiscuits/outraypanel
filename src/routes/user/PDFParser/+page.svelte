@@ -5,17 +5,35 @@ import { Dropzone } from 'flowbite-svelte';
 import { Alert } from 'flowbite-svelte';
 import { InfoCircleSolid } from 'flowbite-svelte-icons';
 import { Spinner } from 'flowbite-svelte';
+import { DateInput } from 'date-picker-svelte'
 
+let date = new Date();
+let dateClean;
+
+// Reactive statement
+$: dateClean = formatDate(date);
+
+function formatDate(d) {
+    let day = d.getDate().toString().padStart(2, '0');
+    let month = (d.getMonth() + 1).toString().padStart(2, '0'); // getMonth() returns 0-11
+    let year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+$: if (dateClean) {
+    console.log("Date changed:", formatDate(date));
+}
 
 let value = []; // Store file names
 
 let pollingIntervalId;
-let maxPollingAttempts = 10;
+let maxPollingAttempts = 15;
 let tableData = []; // Store data for the table
 let isLoaded = false;
 let UPLOADBOX;
 let spinnybox = 'hidden';
 let countaccurate;
+let pollingCount = 0;
 
 const dropHandle = (event) => {
     event.preventDefault();
@@ -62,7 +80,9 @@ function transformDataToTableFormat(datatoconvert) {
 async function handleFileUpload(file) {
     if (pollingIntervalId) {
         clearInterval(pollingIntervalId);
+        pollingCount = 0; // Reset the polling count on a new upload
     }
+
     const formData = new FormData();
     formData.append('file', file);
 
@@ -78,27 +98,37 @@ async function handleFileUpload(file) {
 
         const uploadResult = await uploadResponse.json();
         console.log('File uploaded successfully:', uploadResult);
-        // Start polling the endpoint every 200ms, up to a total of 3 seconds
-        let pollingCount;
-            UPLOADBOX = 'hidden';
-            spinnybox = '';
 
+        // Hide the upload box upon successful upload
+        UPLOADBOX = 'hidden';
+
+        // Start polling the endpoint every 200ms, up to a total of 3 seconds
         pollingIntervalId = setInterval(async () => {
             pollingCount++;
-            const response = await fetch('/api/outray/receive', { method: 'GET' });
-            const jsonResponse  = await response.json();
-            let data = jsonResponse.data
-            countaccurate = jsonResponse.countaccurate
+            
+            // Check if max polling attempts reached
+            if (pollingCount >= maxPollingAttempts) {
+                console.error('Max polling attempts reached');
+                clearInterval(pollingIntervalId);
+                return;
+            }
 
-            console.log(countaccurate)
-            console.log('Fetched data:', data); // Log the fetched data
+            const response = await fetch('/api/outray/receive', { method: 'GET' });
+            const jsonResponse = await response.json();
+            
+            countaccurate = jsonResponse.countaccurate;
+            let data = jsonResponse.data;
+            console.log(countaccurate);
+            console.log('Fetched data:', data);
+
             if (data && Object.keys(data).length !== 0) {
                 console.log('Non-empty data received, stopping polling');
                 clearInterval(pollingIntervalId);
+
                 if (typeof data === 'string') {
                     try {
                         const parsedData = JSON.parse(data);
-                        console.log('Parsed data:', parsedData); // Confirm parsed data
+                        console.log('Parsed data:', parsedData);
 
                         if (Array.isArray(parsedData)) {
                             tableData = transformDataToTableFormat(parsedData);
@@ -112,26 +142,16 @@ async function handleFileUpload(file) {
                 } else {
                     console.error('Data is not a string:', data);
                 }
-                if (pollingCount >= maxPollingAttempts) {
-                    console.error('Max polling attempts reached');
-                    clearInterval(pollingIntervalId);
-
-
+                return; // Stop the function execution here
             } else {
                 console.log('Empty data received, continuing polling');
             }
 
-            pollingCount++;
-            if (pollingCount >= maxPollingAttempts) {
-                console.error('Max polling attempts reached');
-                clearInterval(pollingIntervalId);
-            }
-                }  
         }, 200);
 
     } catch (error) {
         console.error('Error:', error);
-    } 
+    }
 }
 
 const showFiles = (files) => {
@@ -192,6 +212,47 @@ let customColumnsSettingsString = '[\
 
 let customColumnsSettings = JSON.parse(customColumnsSettingsString);
 
+
+
+let activeTable;
+
+
+
+async function handleDownloadCSV() {
+    console.log('Download initialized');
+
+    const data = activeTable.getData();
+    const dateString = dateClean
+
+    const payload = {
+        tableData: data,
+        dateString: dateString
+    };
+
+    const response = await fetch('/api/outray/csvprocess', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    // Handle the file download
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'processed_data.csv';
+    document.body.appendChild(a); // Append <a> to <body>
+    a.click();
+    a.remove(); // Clean up
+}
+
+
 </script>
 
 <main >
@@ -230,7 +291,7 @@ let customColumnsSettings = JSON.parse(customColumnsSettingsString);
 
             <active-table
             
-
+            bind:this={activeTable}
             isColumnResizable={false}
             customColumnsSettings={customColumnsSettings}
             dragColumns={false}
@@ -254,17 +315,30 @@ let customColumnsSettings = JSON.parse(customColumnsSettingsString);
                 "inheritHeaderColors": true
             }}'
             />
-            <div class="mt-6">
-                <button class="bg-slate-400/75 hover:bg-slate-600/75 text-gray-800 font-bold py-2 px-4 rounded-lg w-48 h-16 flex flex-row justify-center items-center transition duration-200">
-                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                    <span>Download CSV</span>
-                  </button>
-                  Not finished yet
-            </div>
+            
 
     {/if}
+            
+    
+    <div class="flex justify-center items-center mt-6 gap-14">
+
+        <div class="flex flex-col pb-2">
+            <p>Select Delivery Date</p>
+            <DateInput class="w-fit border-4 rounded-md" bind:value={date} format='dd/MM/yyyy' dynamicPositioning={true} closeOnSelection={true}/>
+        </div>
+        <div class="">
+            <button class="bg-slate-400/75 hover:bg-slate-600/75 text-gray-800 font-bold rounded-lg w-48 h-16 flex flex-row justify-center items-center transition duration-200" on:click={handleDownloadCSV}>
+                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                <span>Download CSV</span>
+            </button>
+        </div>
+        
+    </div>
+
+    
 
 
     </div>
+
 </main> 
 
