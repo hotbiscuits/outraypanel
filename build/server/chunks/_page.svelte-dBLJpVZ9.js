@@ -85,10 +85,10 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {},
     {
       default: () => {
-        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-72 h-16" }, {}, {})}`;
+        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-5/6" }, {}, {})}`;
       }
     }
-  )} ${validate_component(Card, "Card").$$render(
+  )} <div class="flex flex-col justify-center items-center">${validate_component(Card, "Card").$$render(
     $$result,
     {
       href: "/user/PDFParser",
@@ -100,7 +100,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         return `<h5 class="mb-2 text-2xl font-bold tracking-tight text-white/90" data-svelte-h="svelte-1o5euq">Bibendum PDF Parser</h5> <p class="font-normal text-white/50 leading-tight" data-svelte-h="svelte-1izj8pd">Extract delivery consignments from the Bibendum manifest as a CSV to be imported to CartonCloud.</p>`;
       }
     }
-  )} ${validate_component(Card, "Card").$$render(
+  )} <p class="text-xl font-extrabold justify-center items-center drop-shadow-[0_1.2px_1.2px_rgba(50,50,100,0.5)]" data-svelte-h="svelte-cydf5v">NOW WITH ITEMS</p></div> ${validate_component(Card, "Card").$$render(
     $$result,
     {
       href: "/user",
@@ -109,7 +109,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {},
     {
       default: () => {
-        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-72 h-16" }, {}, {})}`;
+        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-5/6" }, {}, {})}`;
       }
     }
   )} ${validate_component(Card, "Card").$$render(
@@ -121,10 +121,13 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {},
     {
       default: () => {
-        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-72 h-16" }, {}, {})}`;
+        return `${validate_component(TextPlaceholder, "TextPlaceholder").$$render($$result, { size: "sm", class: "w-5/6" }, {}, {})}`;
       }
     }
-  )}</div>
+  )}</div> <div class="flex items-center justify-center gap-8 mt-4" data-svelte-h="svelte-5hrszb"><div class="w-1/2 border rounded-md p-2"><canvas id="chart-options-example"></canvas></div> <div class="h-max w-1/2 border rounded-md p-2"><canvas id="line-chart"></canvas></div></div> <div class="flex flex-row items-center text-center justify-center gap-8 mb-6" data-svelte-h="svelte-1y2c0ql"><div class="w-1/2 p-2"><p class="text-sm">Dynamically loaded &amp; reactive charts #bar</p></div> <div class="w-1/2 p-2"><p class="text-sm">Dynamically loaded &amp; reactive charts #line</p></div></div>
+
+
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
 
 Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam. Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat. Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.
@@ -137,4 +140,4 @@ Donec eget tellus non erat lacinia fermentum. Donec in velit vel ipsum auctor pu
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-u1YmGa8r.js.map
+//# sourceMappingURL=_page.svelte-dBLJpVZ9.js.map
