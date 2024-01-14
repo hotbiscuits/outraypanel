@@ -316,24 +316,29 @@ async function handleDownloadCSV() {
             }}'
             />
             
-            <div class="flex justify-center items-center mt-6 gap-14">
 
-                <div class="flex flex-col pb-2">
-                    <p>Select Delivery Date</p>
-                    <DateInput class="w-fit border-4 rounded-md" bind:value={date} format='dd/MM/yyyy' dynamicPositioning={true} closeOnSelection={true}/>
-                </div>
-                <div class="">
-                    <button class="bg-slate-400/75 hover:bg-slate-600/75 text-gray-800 font-bold rounded-lg w-48 h-16 flex flex-row justify-center items-center transition duration-200" on:click={handleDownloadCSV}>
-                        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                        <span>Download CSV</span>
-                    </button>
-                </div>
-                
-            </div>
     {/if}
             
     
+    <div class="flex justify-center items-center mt-6 gap-14">
 
+        <div class="flex flex-col pb-2">
+            <p>Select Delivery Date</p>
+            <DateInput class="w-fit border-4 rounded-md" bind:value={date} format='dd/MM/yyyy' dynamicPositioning={true} closeOnSelection={true}/>
+        </div>
+        <div class="">
+            <button class="bg-slate-400/75 hover:bg-slate-600/75 text-gray-800 font-bold rounded-lg w-48 h-16 flex flex-row justify-center items-center transition duration-200" on:click={handleDownloadCSV}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" {...$$props}><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20V10m0 10l4-4m-4 4l-4-4M4 4h16"/></svg>
+                <span class="mx-2">  Download CSV</span>
+            </button>
+        </div>
+        <a href="https://app.cartoncloud.com/Outrayjus/Parsers/uploadFile" target="_blank" class="">
+            <button class="bg-slate-400/75 hover:bg-slate-600/75 text-gray-800 font-bold rounded-lg w-48 h-16 flex flex-row justify-center items-center transition duration-200" on:click={handleDownloadCSV}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" {...$$props}><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v10m0-10l4 4m-4-4l-4 4M4 4h16"/></svg>
+                <span class="mx-2">CartonCloud</span>
+            </button>
+        </a>
+    </div>
 
     
 
