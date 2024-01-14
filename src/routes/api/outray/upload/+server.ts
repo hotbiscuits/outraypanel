@@ -65,12 +65,12 @@ export const POST: RequestHandler = async ({ request }) => {
 			return new Response(JSON.stringify({ error: 'Only PDF files are allowed' }), { status: 400 });
 		}
 
-		const uploadDir = './static/';
+		const uploadDir = './uploads/';
 		const savedFileName = await saveFile(file, uploadDir);
 		console.log('File saved:', savedFileName);
 
-		const publicPath = `/${savedFileName}`;
-		const fullPath = `${BASE_URL}/${publicPath}`;
+		const publicPath = `/files/${savedFileName}`;
+		const fullPath = `${BASE_URL}${publicPath}`;
 		const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, '$1');
 
 		console.log('Making API call to Flask with path:', normalizedFullPath);
@@ -80,7 +80,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ filePath: normalizedFullPath })
 		});
-		// https://pdfparser-production.up.railway.app
+
 		if (!response.ok) {
 			console.error('Flask API call failed');
 			throw new Error('Error processing file');
