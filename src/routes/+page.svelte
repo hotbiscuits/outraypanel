@@ -2,6 +2,7 @@
 import { Section, Register } from 'flowbite-svelte-blocks';
 import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
 import { onMount } from 'svelte';
+
 //@ts-ignore
 import { goto } from '$app/navigation'; // Import the goto function for navigation
 // @ts-ignore
@@ -26,6 +27,9 @@ $: if ($valueStr) {
 
 //@ts-ignore
 import Logo from '$lib/logo.svelte';
+
+
+
 
 </script>
 

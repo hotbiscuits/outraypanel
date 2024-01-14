@@ -46,6 +46,7 @@
 		"lucide-svelte": "^0.309.0",
 		"node-fetch": "^3.3.2",
 		"papaparse": "^5.4.1",
-		"svelty-picker": "^5.2.0"
+		"svelty-picker": "^5.2.0",
+		"tw-elements": "^1.1.0"
 	}
 }
