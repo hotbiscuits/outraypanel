@@ -1,102 +1,45 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import fs from 'fs';
 import path from 'path';
-
-async function saveFile(file: File, uploadDir: string): Promise<string> {
-	// Generate a unique file name
-
-	const fileName = Math.floor(1000 + Math.random() * 9000) + '.pdf';
-
-	const filePath = path.join(uploadDir, fileName);
-
-	console.log('Preparing to save file at:', filePath);
-
-	// Ensure the upload directory exists
-	if (!fs.existsSync(uploadDir)) {
-		console.log('Creating upload directory:', uploadDir);
-		fs.mkdirSync(uploadDir, { recursive: true });
-	}
-
-	// Convert ArrayBuffer to Buffer
-	const buffer = Buffer.from(await file.arrayBuffer());
-
-	// Save the file
-	await fs.promises.writeFile(filePath, buffer);
-
-	try {
-		const buffer = Buffer.from(await file.arrayBuffer());
-		await fs.promises.writeFile(filePath, buffer);
-		console.log('File saved:', filePath);
-		await fs.promises.chmod(filePath, 0o777);
-		console.log('File permissions changed to 777:', filePath);
-		// Verify file existence and size
-		if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
-			console.log('File verification successful:', filePath);
-			return fileName;
-		} else {
-			console.error('File verification failed:', filePath);
-			return 'null';
-		}
-	} catch (error) {
-		console.error('Error saving file:', error);
-		return 'null';
-	}
-
-	return fileName;
-}
 // @ts-ignore
 import { BASE_URL } from '$lib/config'; // Import BASE_URL from your configuration
 // @ts-ignore
 import { FLASK_URL } from '$lib/config'; // Import BASE_URL from your configuration
+import fetch from 'node-fetch'; // Make sure to install node-fetch if not already installed
+
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		console.log('Received file upload request');
 
 		const data = await request.formData();
+		console.log('Form data received:', data);
+
 		const file = data.get('file');
-
-		if (!(file instanceof File)) {
-			console.error('Uploaded data is not a file');
-			throw new Error('Uploaded data is not a file');
+		if (!file || typeof file === 'string') {
+			console.log('No file or file is of incorrect type:', file);
+			return new Response('No file uploaded', { status: 400 });
 		}
+		console.log('File received:', file.name);
 
-		if (file.type !== 'application/pdf') {
-			console.error('File type is not PDF');
-			return new Response(JSON.stringify({ error: 'Only PDF files are allowed' }), { status: 400 });
-		}
+		// Forward the file to Flask backend
+		const flaskEndpoint = FLASK_URL;
+		console.log('Forwarding to Flask backend:', flaskEndpoint);
 
-		const uploadDir = './uploads/';
-		const savedFileName = await saveFile(file, uploadDir);
-		console.log('File saved:', savedFileName);
+		const formData = new FormData();
+		formData.append('file', file);
 
-		const publicPath = `/files/${savedFileName}`;
-		const fullPath = `${BASE_URL}${publicPath}`;
-		const normalizedFullPath = fullPath.replace(/([^:]\/)\/+/g, '$1');
-
-		console.log('Making API call to Flask with path:', normalizedFullPath);
-		console.log(`${FLASK_URL}/flaskin/`);
-		const response = await fetch(`${FLASK_URL}/flaskin/`, {
+		const response = await fetch(flaskEndpoint, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ filePath: normalizedFullPath })
+			body: formData
 		});
+		console.log('Received response from Flask backend:', response);
 
-		if (!response.ok) {
-			console.error('Flask API call failed');
-			throw new Error('Error processing file');
-		}
+		const backendResponse = await response.json();
+		console.log('Flask backend response:', backendResponse);
 
-		console.log('File processing by Flask API successful');
-
-		//fs.unlinkSync(path.join(uploadDir, savedFileName));
-		console.log('File deleted from SvelteKit server:', savedFileName);
-
-		return new Response(JSON.stringify({ fullPath: fullPath }), { status: 200 });
+		return new Response(JSON.stringify(backendResponse), { status: response.status });
 	} catch (error) {
-		console.error('Error in file processing:', error);
-		return new Response(
-			JSON.stringify({ error: 'Error processing file', details: error.message }),
-			{ status: 500 }
-		);
+		console.error('Error handling file upload:', error);
+		return new Response('Internal Server Error', { status: 500 });
 	}
 };
