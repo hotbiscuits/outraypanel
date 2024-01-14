@@ -16,12 +16,13 @@
     <Card href="/user" class="bg-[#1f2937] flex items-center hover:bg-slate-600 border-2 hover:border-indigo-200 hover:border-2">
         <TextPlaceholder size="sm" class="w-72 h-16" />
     </Card>
- 
+    <div class="flex flex-col justify-center items-center">
     <Card href="/user/PDFParser" class="bg-[#1f2937]  flex items-center hover:bg-slate-600 border-2 hover:border-indigo-200 hover:border-2">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white/90">Bibendum PDF Parser</h5>
         <p class="font-normal text-white/50 leading-tight">Extract delivery consignments from the Bibendum manifest as a CSV to be imported to CartonCloud.</p>
     </Card>
-
+    <p class="bg-gradient-to-r from-indigo-400 via-violet-600 to-cyan-400 bg-clip-text text-transparent text-3xl font-extrabold justify-center items-center underline drop-shadow-[0_1.2px_1.2px_rgba(50,50,100,0.5)]">NOW WITH ITEMS</p>
+    </div>
     <Card href="/user" class="bg-[#1f2937] flex items-center hover:bg-slate-600 border-2 hover:border-indigo-200 hover:border-2">
         <TextPlaceholder size="sm" class="w-72 h-16" />
     </Card>
