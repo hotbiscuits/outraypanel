@@ -7,18 +7,16 @@ function __memo(fn) {
 return {
 	appDir: "_app",
 	appPath: "_app",
-	assets: new Set(["favicon.png","4464.pdf"]),
-	mimeTypes: {".png":"image/png",".pdf":"application/pdf"},
+	assets: new Set(["4464.pdf","favicon.png"]),
+	mimeTypes: {".pdf":"application/pdf",".png":"image/png"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.yaRY45m1.js","app":"_app/immutable/entry/app.9DOyzsfX.js","imports":["_app/immutable/entry/start.yaRY45m1.js","_app/immutable/chunks/scheduler.EOolTuyq.js","_app/immutable/chunks/singletons.cOhkKLT7.js","_app/immutable/chunks/index.xNFlRHgx.js","_app/immutable/entry/app.9DOyzsfX.js","_app/immutable/chunks/preload-helper.0HuHagjb.js","_app/immutable/chunks/scheduler.EOolTuyq.js","_app/immutable/chunks/index.siMF19mn.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
+		client: {"start":"_app/immutable/entry/start.aB3MN7Aa.js","app":"_app/immutable/entry/app.OHgBpmFR.js","imports":["_app/immutable/entry/start.aB3MN7Aa.js","_app/immutable/chunks/scheduler.Ia5wE9Hu.js","_app/immutable/chunks/singletons.rDc37zWf.js","_app/immutable/chunks/index.4HhxYWZ4.js","_app/immutable/chunks/paths.3dnlrkYN.js","_app/immutable/entry/app.OHgBpmFR.js","_app/immutable/chunks/preload-helper.0HuHagjb.js","_app/immutable/chunks/scheduler.Ia5wE9Hu.js","_app/immutable/chunks/index.vg01QSH7.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
 		nodes: [
-			__memo(() => import('./chunks/0-CHOeOleu.js')),
-			__memo(() => import('./chunks/1-n5uoMY14.js')),
-			__memo(() => import('./chunks/2-Dt7Ix_XO.js')),
-			__memo(() => import('./chunks/3-9kSytJ3t.js')),
-			__memo(() => import('./chunks/4-mcwfdjrT.js')),
-			__memo(() => import('./chunks/5-2j_bXFCK.js')),
-			__memo(() => import('./chunks/6-Dfj-NgRK.js'))
+			__memo(() => import('./chunks/0-Y_YHHpUl.js')),
+			__memo(() => import('./chunks/1-TZH44FK7.js')),
+			__memo(() => import('./chunks/2-1KUU6uk5.js')),
+			__memo(() => import('./chunks/3-9bIOBd9w.js')),
+			__memo(() => import('./chunks/4-wPXP5plq.js'))
 		],
 		routes: [
 			{
@@ -43,13 +41,6 @@ return {
 				endpoint: __memo(() => import('./chunks/_server.ts-Slt-wx_k.js'))
 			},
 			{
-				id: "/api/outray/tree",
-				pattern: /^\/api\/outray\/tree\/?$/,
-				params: [],
-				page: null,
-				endpoint: __memo(() => import('./chunks/_server.ts-2WHCnEHB.js'))
-			},
-			{
 				id: "/api/outray/upload",
 				pattern: /^\/api\/outray\/upload\/?$/,
 				params: [],
@@ -61,20 +52,6 @@ return {
 				pattern: /^\/user\/?$/,
 				params: [],
 				page: { layouts: [0,2,], errors: [1,,], leaf: 4 },
-				endpoint: null
-			},
-			{
-				id: "/user/PDFParser",
-				pattern: /^\/user\/PDFParser\/?$/,
-				params: [],
-				page: { layouts: [0,2,], errors: [1,,], leaf: 5 },
-				endpoint: null
-			},
-			{
-				id: "/user/tree",
-				pattern: /^\/user\/tree\/?$/,
-				params: [],
-				page: { layouts: [0,2,], errors: [1,,], leaf: 6 },
 				endpoint: null
 			}
 		],
