@@ -24,52 +24,15 @@
 			}
 		}, 0);
 	}
-
-	//@ts-ignore
-	import Logo from '$lib/logo.svelte';
 </script>
 
-<div class="h-screen bg-stone-700">
-	<div class="flex h-fit w-full items-center justify-center bg-stone-700">
-		<div class="h-3/4 w-1/3">
-			<Section name="login" class="w-1/2">
-				<Register href="/123" class="pt-4">
-					<svelte:fragment slot="top">
-						<Logo width="100" height="100" class="rounded-full border-8 border-black bg-white" />
-					</svelte:fragment>
-					<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-						<form class="flex flex-col space-y-6" action="/">
-							<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">
-								Dashboard Login wtf
-							</h3>
-							<Label class="space-y-2">
-								<span>Username</span>
-								<Input type="email" name="email" placeholder="name@company.com" required />
-							</Label>
-							<Label class="space-y-2">
-								<span>Password</span>
-								<Input type="password" name="password" placeholder="•••••" required />
-							</Label>
-							<div class="flex items-start">
-								<Checkbox>Remember me</Checkbox>
-								<a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-									>Forgot password?</a
-								>
-							</div>
-							<Button type="submit" class="w-full">Sign in</Button>
-							<p class="text-sm font-light text-gray-500 dark:text-gray-400">
-								Don’t have an account yet? <a
-									href="/user"
-									class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-									>Sign up</a
-								>
-							</p>
-						</form>
-					</div>
-				</Register>
-			</Section>
-			<div class="m-6 flex flex-col items-center justify-center rounded-md bg-white sm:p-8">
-				<p class="pb-2">PIN Bypass</p>
+<body>
+	<div class="flex h-screen items-center justify-center">
+		<div class="w-1/3">
+			<div
+				class="m-6 flex min-h-[200px] flex-col items-center justify-center rounded-md bg-white sm:p-8"
+			>
+				<p class="pb-2">Bibendum Parser Login</p>
 				<div use:melt={$root} class="flex w-1/2 items-center justify-center gap-2">
 					{#each Array.from({ length: 4 }) as _}
 						<input
@@ -81,4 +44,34 @@
 			</div>
 		</div>
 	</div>
-</div>
+</body>
+
+<style>
+	body {
+		/* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+		/* background: linear-gradient(-45deg, #fc2a05, #ce3972e3, #0d4458, #23d5ab); */
+
+		/* background: radial-gradient(#ee7752, #e73c7e, #23a6d5, #23d5ab); */
+		/* DARKER BELOW */
+		background: radial-gradient(#fc2a05, #ce3972e3, #0d4458, #23d5ab);
+		background-size: 400% 400%;
+		animation: gradient 15s ease infinite;
+		height: 100vh;
+	}
+
+	@keyframes gradient {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	.invalid {
+		border-color: red;
+	}
+</style>
