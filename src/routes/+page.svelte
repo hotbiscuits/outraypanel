@@ -32,7 +32,7 @@
 			<div
 				class="m-6 flex min-h-[200px] flex-col items-center justify-center rounded-md bg-white sm:p-8"
 			>
-				<p class="pb-2">Bibendum Parser Login</p>
+				<p class="pb-2">Bibendum Parser Login THIS MAKES NO SENSE</p>
 				<div use:melt={$root} class="flex w-1/2 items-center justify-center gap-2">
 					{#each Array.from({ length: 4 }) as _}
 						<input
